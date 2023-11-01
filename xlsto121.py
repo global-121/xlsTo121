@@ -5,11 +5,12 @@ import csv
 
 ############## TO DO ################
 # phone number
-
+# improve mappingdf
 
 ############## Manual ################
 # add column to xlsform called '121duplicatecheck' and set to true/false based on if you want to include it in the 121 duplicate check
 # save xlsform in the same folder as 'xlsto121.py'
+# make sure there is a column named 'label' in both sheets (survey and choices)
 # enter the name of the xlsform here:
 form = 'xlsform.xlsx'
 # Change initial program setup under 'data'
@@ -17,8 +18,8 @@ form = 'xlsform.xlsx'
 result = 'output.json'
 # Run script
 # post process: change phone number question to type 'tel'
-
 # Define the mapping dictionary from the CSV
+
 type_mapping = {}
 
 with open('mappings/kobo121fieldtypes.csv', newline='') as csvfile:
@@ -26,6 +27,8 @@ with open('mappings/kobo121fieldtypes.csv', newline='') as csvfile:
     for row in reader:
         if len(row) == 2:
             type_mapping[row[0]] = row[1]
+
+mappingdf = pd.read_csv('mappings/kobo121fieldtypes.csv', delimiter='\t')
 
 # Read the xlsform
 df1 = pd.read_excel(form, sheet_name='survey')
@@ -37,51 +40,50 @@ data = {
     "published": True,
     "validation": False,
     "phase": "registrationValidation",
-    "location": "Ethiopia",
-    "ngo": "ANE",
+    "location": "Greece",
+    "ngo": "Hellenic Red Cross Society",
     "titlePortal": {
-        "en": "DRA Joint Response 2023 Ethiopia - ANE"
+        "en": "Cash in emergencies"
     },
     "titlePaApp": {
-        "en": "DRA Joint Response 2023 Ethiopia - ANE"
+        "en": "Cash in emergencies"
     },
     "description": {
         "en": ""
     },
-    "startDate": "2023-08-01T12:00:00.000Z",
-    "endDate": "2023-12-31T12:00:00.000Z",
-    "currency": "ETB",
+    "startDate": "2023-12-01T12:00:00.000Z",
+    "endDate": "2024-12-01T12:00:00.000Z",
+    "currency": "EUR",
     "distributionFrequency": "month",
     "distributionDuration": 3,
-    "fixedTransferValue": 7000,
+    "fixedTransferValue": 500,
     "paymentAmountMultiplierFormula": "",
     "financialServiceProviders": [
         {
         "fsp": "Commercial-bank-ethiopia"
         }
     ],
-    "targetNrRegistrations": 250,
+    "targetNrRegistrations": 1000,
     "tryWhatsAppFirst": False,
     "meetingDocuments": {
         "en": ""
     },
     "notifications": {
         "en": {
-        "registered": "This is a message from ANE.\n\nThank you for your registration. We will inform you later if you are included in this project or not."
+        "registered": "This is a message from Hellenic Red Cross.\n\nThank you for your registration. We will inform you later if you are included in this project or not."
         }
     },
-    "phoneNumberPlaceholder": "+251 000 000 000",
+    "phoneNumberPlaceholder": "+30 000 000 000",
     "programCustomAttributes": [],
     "programQuestions": [],
     "aboutProgram": {
-        "en": "DRA Joint Response Ethiopia 2023 - ANE"
+        "en": "Cash in emergencies"
     },
     "fullnameNamingConvention": [
         "fullName"
     ],
     "languages": [
-        "en",
-        "et_AM"
+        "en"
     ],
     "enableMaxPayments": True
 }
@@ -89,40 +91,42 @@ data = {
 # Convert the first CSV data into the programQuestions format
 
 for index, row in df1.iterrows():
-    question = {
-        "name": row['name'],
-        "label": {
-            "en": row['label']
-        },
-        "answerType": type_mapping[row['type'].split()[0]],
-        "options": [],
-        "scoring": {},
-        "persistence": True,
-        "pattern": "",
-        "phases": [],
-        "editableInPortal": True,
-        "export": [
-            "all-people-affected",
-            "included",
-            "selected-for-validation"
-        ],
-        "shortLabel": {
-            "en": row['name'],
-        },
-        "duplicateCheck": row['121duplicatecheck'],
-        "placeholder": ""
-    }
-    if type_mapping[row['type'].split()[0]] == 'dropdown':
-        filtered_df = df2[df2['list_name'] == row['type'].split()[-1]]
-        for index, row in filtered_df.iterrows():
-            option = {
-                "option": row['name'],
-                "label": {
-                    "en": row['label']
+    if row['type'].split()[0] in mappingdf['kobotype'].tolist():
+        question = {
+            "name": row['name'],
+            "label": {
+                "en": row['label']
+            },
+            "answerType": type_mapping[row['type'].split()[0]],
+            "questionType": "standard",
+            "options": [],
+            "scoring": {},
+            "persistence": True,
+            "pattern": "",
+            "phases": [],
+            "editableInPortal": True,
+            "export": [
+                "all-people-affected",
+                "included",
+                "selected-for-validation"
+            ],
+            "shortLabel": {
+                "en": row['name'],
+            },
+            "duplicateCheck": row['121duplicatecheck'],
+            "placeholder": ""
+        }
+        if type_mapping[row['type'].split()[0]] == 'dropdown':
+            filtered_df = df2[df2['list_name'] == row['type'].split()[-1]]
+            for index, row in filtered_df.iterrows():
+                option = {
+                    "option": row['name'],
+                    "label": {
+                        "en": row['label']
+                    }
                 }
-            }
-            question["options"].append(option)
-    data["programQuestions"].append(question)
+                question["options"].append(option)
+        data["programQuestions"].append(question)
 
 
 # Convert the data dictionary to JSON

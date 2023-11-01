@@ -4,8 +4,7 @@ decimal	numeric
 range	numeric
 text	text
 select_one	dropdown
-select_multiple	dropdown
-note	text
+select_multiple	text
 geopoint	text
 geotrace	text
 geoshape	text
@@ -14,5 +13,4 @@ time	text
 dateTime	text
 image	text
 calculate	text
-acknowledge	text
 hidden	text
