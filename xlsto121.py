@@ -7,6 +7,17 @@ import csv
 # phone number
 
 
+############## Manual ################
+# add column to xlsform called '121duplicatecheck' and set to true/false based on if you want to include it in the 121 duplicate check
+# save xlsform in the same folder as 'xlsto121.py'
+# enter the name of the xlsform here:
+form = 'xlsform.xlsx'
+# Change initial program setup under 'data'
+# give the output file a name:
+result = 'output.json'
+# Run script
+# post process: change phone number question to type 'tel'
+
 # Define the mapping dictionary from the CSV
 type_mapping = {}
 
@@ -17,8 +28,8 @@ with open('mappings/kobo121fieldtypes.csv', newline='') as csvfile:
             type_mapping[row[0]] = row[1]
 
 # Read the xlsform
-df1 = pd.read_excel('xlsform.xlsx', sheet_name='survey')
-df2 = pd.read_excel('xlsform.xlsx', sheet_name='choices')
+df1 = pd.read_excel(form, sheet_name='survey')
+df2 = pd.read_excel(form, sheet_name='choices')
 
 
 # Create the JSON structure
@@ -118,7 +129,7 @@ for index, row in df1.iterrows():
 output_json = json.dumps(data, indent=2)
 
 # Write the JSON to a file
-with open('output.json', 'w') as json_file:
+with open(result, 'w') as json_file:
     json_file.write(output_json)
 
-print("JSON data has been written to 'output.json'")
+print(f"JSON data has been written to {result}")
