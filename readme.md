@@ -40,7 +40,7 @@ Before running the script, there are a few manual steps and configurations you n
 
    You can customize the initial program setup under the 'data' dictionary within the script to match your specific project details. Update values like project title, currency, distribution details, and other project-specific information.
 
-```json
+```python
 data = {
     # ...
     "titlePortal": {
