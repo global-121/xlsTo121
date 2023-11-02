@@ -2,23 +2,14 @@ import pandas as pd
 import json
 import csv
 
-
 ############## TO DO ################
-# phone number
 # improve mappingdf
 
-############## Manual ################
-# add column to xlsform called '121duplicatecheck' and set to true/false based on if you want to include it in the 121 duplicate check
-# save xlsform in the same folder as 'xlsto121.py'
-# make sure there is a column named 'label' in both sheets (survey and choices)
+############## Start ################
 # enter the name of the xlsform here:
 form = 'xlsform.xlsx'
-# Change initial program setup under 'data'
 # give the output file a name:
 result = 'output.json'
-# Run script
-# post process: change phone number question to type 'tel'
-# Define the mapping dictionary from the CSV
 
 type_mapping = {}
 
