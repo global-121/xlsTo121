@@ -34,7 +34,7 @@ Before running the script, there are a few manual steps and configurations you n
 
 3. Change the type of the (primary) phone number question
 
-   Change the type of the (primary) phone number question to `tel`
+   Change the type of the (primary) phone number question to `tel` in the Excel file
 
 4. Customize Initial Program Setup
 
