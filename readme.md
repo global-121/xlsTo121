@@ -1,6 +1,6 @@
 # Script to generate 121 programs from an xlsx form
 
-This script, xlsto121.py, is a Python tool designed to convert an XLSForm file into a JSON structure compatible with the 121 Service platform, which is used for humanitarian programs. This README will provide instructions on how to use the script, its purpose, and any necessary manual steps.
+This script, xlsto121.py, is a Python tool designed to convert an XLSForm file into a JSON structure compatible with the 121 Service.
 
 ## Purpose
 
