@@ -14,3 +14,4 @@ dateTime	text
 image	text
 calculate	text
 hidden	text
+tel	tel
