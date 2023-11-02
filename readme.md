@@ -24,20 +24,16 @@ pip install pandas jsonlib
 
 Before running the script, there are a few manual steps and configurations you need to perform:
 
-1. Update 'xlsform.xlsx' File
-
+1. Update 'xlsform.xlsx' File  
    Set the form variable in the script to the name of your XLSForm file, which should be placed in the same folder as the script.
 
-2. Add a '121duplicatecheck' Column
-
+2. Add a '121duplicatecheck' Column  
    In your XLSForm, make sure to add a column called '121duplicatecheck' and set it to true or false based on whether you want to include it in the 121 duplicate check. This step is important for data validation in the 121 Service platform.
 
-3. Change the type of the (primary) phone number question
-
+3. Change the type of the (primary) phone number question  
    Change the type of the (primary) phone number question to `tel` in the Excel file
 
-4. Customize Initial Program Setup
-
+4. Customize Initial Program Setup  
    You can customize the initial program setup under the 'data' dictionary within the script to match your specific project details. Update values like project title, currency, distribution details, and other project-specific information.
 
 ```python
